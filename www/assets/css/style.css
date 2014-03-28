@@ -1,0 +1,22 @@
+@import url(http://fonts.googleapis.com/css?family=Dancing+Script);
+
+body {
+	background-color: #eee;
+}
+
+.sign-in h1 {
+	font-family: 'Dancing Script', cursive;
+}
+
+.table,
+#chart_div,
+.invoice-form-container {
+	background-color: #fff;
+	-webkit-box-shadow: 0 8px 6px -6px #777;
+	   -moz-box-shadow: 0 8px 6px -6px #777;
+			box-shadow: 0 8px 6px -6px #777;
+}
+
+.invoice-form-container {
+	padding: 15px;
+}

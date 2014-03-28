@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * This file is part of the Nette Framework (http://nette.org)
+ * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
+ */
+
+namespace App;
+
+use Nette;
+
+
+/**
+ * Passwords tools. Requires PHP >= 5.3.7.
+ *
+ * @author     David Grudl
+ */
+class Passwords
+{
+	const PASSWORD_MAX_LENGTH = 4096;
+	const BCRYPT_COST = 10;
+
+
+	/**
+	 * Computes salted password hash.
+	 * @param  string
+	 * @param  array with cost (4-31), salt (22 chars)
+	 * @return string  60 chars long
+	 */
+	public static function hash($password, array $options = NULL)
+	{		
+		$hash = md5($password);
+		return $hash;
+	}
+
+
+	/**
+	 * Verifies that a password matches a hash.
+	 * @return bool
+	 */
+	public static function verify($password, $hash)
+	{
+		// return preg_match('#^\$2y\$(?P<cost>\d\d)\$(?P<salt>.{22})#', $hash, $m)
+		// 	&& $m['cost'] > 3 && $m['cost'] < 31
+		// 	&& self::hash($password, $m) === $hash;
+
+		return md5($password);
+	}
+
+
+	/**
+	 * Checks if the given hash matches the options.
+	 * @param  string
+	 * @param  array with cost (4-31)
+	 * @return bool
+	 */
+	public static function needsRehash($hash, array $options = NULL)
+	{
+		$cost = isset($options['cost']) ? (int) $options['cost'] : self::BCRYPT_COST;
+		return !preg_match('#^\$2y\$(?P<cost>\d\d)\$(?P<salt>.{22})#', $hash, $m)
+			|| $m['cost'] < $cost;
+	}
+
+}

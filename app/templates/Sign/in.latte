@@ -1,0 +1,26 @@
+{block content}
+	
+	{form signInForm}
+	<div class="row sign-in">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form class="form-signin" role="form">
+				<h1 class="form-signin-heading">Invoice Reminder</h1>
+				{input username}		
+				{input password}		
+				{label remember /}
+				{input remember}		
+				{input send}
+			</form>
+		</div>
+		<div class="col-md-4"></div>
+	</div> 
+	{/form signInForm}
+
+{/block}
+
+{block head}
+	
+	<link rel="stylesheet" href="{$basePath}/assets/css/sign-in.css">
+
+{/block}

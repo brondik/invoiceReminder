@@ -1,0 +1,133 @@
+{block content}
+
+	<h1 class="text-center">Overview of costs</h1>
+	<div id="chart_div"></div>
+
+	<h1 class="text-center">Invoices before expiration</h1>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Title</th>
+				<th>Company</th>
+				<th>Contact</th>
+				<th>Created</th>
+				<th>Delivered</th>
+				<th>Due</th>
+				<th>Value</th>
+				<th>Expiration</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach $expiringInvoices as $eInvoice}
+			<tr <?php 
+			if ($eInvoice->due < date("Y-m-d H:i:s")) { 
+				echo 'class="danger"';
+			} ?> >
+				<td>{$eInvoice->id}</td>
+				<td>{$eInvoice->title}</td>
+				<td>{$eInvoice->company}</td>
+				<td>{$eInvoice->contact}</td>
+				<td>{$eInvoice->created|date:'%d.%m.%Y'}</td>
+				<td>{$eInvoice->delivered|date:'%d.%m.%Y'}</td>
+				<td>{$eInvoice->due|date:'%d.%m.%Y'}</td>
+				<td>{$eInvoice->total_value}€</td>
+				<td>
+					<?php 
+
+
+						if ($eInvoice->due > date("Y-m-d H:i:s")) {
+							$datetime1 = date_create(date("Y-m-d H:i:s"));
+							$datetime2 = date_create($eInvoice->due);
+							$interval = date_diff($datetime1, $datetime2);
+							echo $interval->format('%R%a days');
+						} else {
+							echo '<span class="glyphicon glyphicon-remove"></span> expired';							
+						}
+					?>
+				</td>
+				<td>
+					<a n:href="Invoice:show $eInvoice->id">
+					<span class="glyphicon glyphicon-share-alt"></span> Show</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+	<h1 n:block="title" class="text-center">List of Invoices</h1>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Title</th>
+				<th>Company</th>
+				<th>Contact</th>
+				<th>Created</th>
+				<th>Delivered</th>
+				<th>Due</th>
+				<th>Value</th>
+				<th>Expiration</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach $invoices as $invoice}
+			<tr>
+				<td>{$invoice->id}</td>
+				<td>{$invoice->title}</td>
+				<td>{$invoice->company}</td>
+				<td>{$invoice->contact}</td>
+				<td>{$invoice->created|date:'%d.%m.%Y'}</td>
+				<td>{$invoice->delivered|date:'%d.%m.%Y'}</td>
+				<td>{$invoice->due|date:'%d.%m.%Y'}</td>
+				<td>{$invoice->total_value}€</td>
+				<td>
+					<?php 
+						if ($eInvoice->due > date("Y-m-d H:i:s")) {
+							$datetime1 = date_create(date("Y-m-d H:i:s"));
+							$datetime2 = date_create($invoice->due);
+							$interval = date_diff($datetime1, $datetime2);
+							echo $interval->format('%R%a days');
+						} else {
+							echo '<span class="glyphicon glyphicon-remove"></span> expired';							
+						}
+					?>
+				</td>
+				<td>
+					<a n:href="Invoice:show $invoice->id">
+					<span class="glyphicon glyphicon-share-alt"></span> Show</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+{/block}
+
+{block scripts}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+	  google.load("visualization", "1", { packages:["corechart"] });
+	  google.setOnLoadCallback(drawChart);
+	  function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+			['Date', 'Costs'],
+			{foreach $costs as $cost}
+				[{$cost->created|date:'%d.%m.%Y'}, {$cost->total_value}],
+			{/foreach}
+		]);
+
+		var options = {
+		  hAxis: { title: 'Date',  titleTextStyle: { color: '#333' } },
+		  vAxis: { minValue: 0 }
+		};
+
+		var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
+	  }
+	</script>
+{/block}

@@ -1,0 +1,74 @@
+{**
+ * My Application layout template.
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="{$robots}" n:ifset="$robots">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>{block title|striptags}Invoice Reminder n˚1{/block}</title>
+
+	<link rel="stylesheet" href="{$basePath}/assets/css/bootstrap.css">
+	<link rel="stylesheet" href="{$basePath}/assets/css/datepicker.css">
+	<link rel="stylesheet" href="{$basePath}/assets/css/style.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	{block head}{/block}
+</head>
+
+<body>
+	<script> document.documentElement.className+=' js' </script>
+	{if $user->loggedIn}
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" n:href="Homepage:default">Invoice Reminder</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a n:href="Homepage:">Home</a></li>
+				<li><a n:href="Invoice:create">Add invoice</a></li>
+			</ul>
+			
+			<ul class="nav navbar-nav navbar-right">
+				<li><a n:href="Sign:out"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+	{/if}
+
+
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
+			{include content}
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+
+	<script src="{$basePath}/assets/js/bootstrap.js"></script>
+	<script src="{$basePath}/assets/js/bootstrap-datepicker.js"></script>
+	<script src="{$basePath}/assets/js/netteForms.js"></script>
+	{block scripts}{/block}
+
+</body>
+</html>

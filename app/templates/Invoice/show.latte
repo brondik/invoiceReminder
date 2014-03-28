@@ -1,0 +1,111 @@
+{block content}
+
+	<ul class="nav nav-tabs">
+		<li>
+			<a n:href="Homepage:default">← go back</a>
+		</li>
+		<li>
+			<a n:href="edit $invoice->id">Edit invoice</a>
+		</li>
+	</ul>
+	
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<div class="alert alert-info">
+			<a href="#" class="alert-link" n:block="title">{$invoice->title}</a>
+			</div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Deliverer</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Company:</td>
+						<td>{$invoice->company}</td>
+					</tr>
+					<tr>
+						<td>Employee:</td>
+						<td>{$invoice->employee}</td>
+					</tr>
+					<tr>
+						<td>Contact:</td>
+						<td>{$invoice->contact}</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Informations</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Created:</td>
+						<td>{$invoice->created|date:'%d.%m.%Y'}</td>
+					</tr>
+					<tr>
+						<td>Delivered:</td>
+						<td>{$invoice->delivered|date:'%d.%m.%Y'}</td>
+					</tr>
+					<tr>
+						<td>Due:</td>
+						<td>{$invoice->due|date:'%d.%m.%Y'}</td>
+					</tr>
+					{if $invoice->bank_account}
+					<tr>
+						<td>Bank Account:</td>
+						<td>{$invoice->bank_account}</td>
+					</tr>
+					{/if}
+					{if $invoice->iban}
+					<tr>
+						<td>IBAN:</td>
+						<td>{$invoice->iban}</td>
+					</tr>
+					<tr>
+						<td>SWIFT:</td>
+						<td>{$invoice->swift}</td>
+					</tr>
+					{/if}
+					<tr>
+						<td>Constant Symbol:</td>
+						<td>{$invoice->constant_symbol}</td>
+					</tr>
+					<tr>
+						<td>Constant Symbol:</td>
+						<td>{$invoice->variable_symbol}</td>
+					</tr>
+					<tr>
+						<td>Specific Number:</td>
+						<td>{$invoice->specific_number}</td>
+					</tr>
+					<tr>
+						<td>Total Value:</td>
+						<td>{$invoice->total_value}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<hr>
+			
+			<h3>Note:</h3>
+			<p>
+				{$invoice->note}
+			</p>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+

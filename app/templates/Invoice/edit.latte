@@ -1,0 +1,83 @@
+{block content}
+
+	<h1>Edit invoice</h1>
+
+	<ul class="nav nav-tabs">
+		<li>
+			<a n:href="show $invoiceId">← go back</a>
+		</li>
+	</ul>
+
+	<div class="invoice-form-container">
+		{form invoiceForm}
+		
+			<div class="row">
+				<div class="col-md-12">{label title/}{input title}</div>
+			</div>
+
+			<hr>
+
+			<div class="row">
+				<div class="col-md-4">{label company/}{input company}</div>
+				<div class="col-md-4">{label contact/}{input contact}</div>
+				<div class="col-md-4">{label employee/}{input employee}</div>
+			</div>
+
+			<hr>
+
+			<div class="row">
+				<div class="col-md-4">{label created/}{input created}</div>
+				<div class="col-md-4">{label delivered/}{input delivered}</div>
+				<div class="col-md-4">{label due/}{input due}</div>
+			</div>
+
+			<hr>
+
+			<div class="row">
+				<div class="col-md-4">{label bank_account/}{input bank_account}</div>
+				<div class="col-md-4">{label iban/}{input iban}</div>
+				<div class="col-md-4">{label swift/}{input swift}</div>
+			</div>
+
+			<hr>
+
+			<div class="row">
+				<div class="col-md-4">{label constant_symbol/}{input constant_symbol}</div>
+				<div class="col-md-4">{label variable_symbol/}{input variable_symbol}</div>
+				<div class="col-md-4">{label specific_number/}{input specific_number}</div>
+			</div>
+			
+			<hr>
+
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4"></div>
+				<div class="col-md-4">{label total_value/}{input total_value}</div>
+			</div>
+
+			<hr>
+
+			<div class="row">
+				<div class="col-md-12">{label note/}{input note}</div>
+			</div>
+
+			<hr>
+
+			<div class="row">
+				<div class="pull-right">{input send}</div>
+			</div>
+
+		{/form invoiceForm}
+	</div>
+
+{/block}
+
+{block scripts}
+	<script>
+		$(function() {
+			$("#frm-invoiceForm-created").datepicker({ format: 'dd.mm.yyyy' });
+			$("#frm-invoiceForm-delivered").datepicker({ format: 'dd.mm.yyyy' });
+			$("#frm-invoiceForm-due").datepicker({ format: 'dd.mm.yyyy' });
+		});
+	</script>
+{/block}

@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<title>{$title}</title>
+	</head>
+
+	<body>
+		<table>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Title</th>
+					<th>Company</th>
+					<th>Contact</th>
+					<th>Created</th>
+					<th>Delivered</th>
+					<th>Due</th>
+					<th>Value</th>
+					<th>Expiration</th>
+				</tr>
+			</thead>
+			<tbody>
+				{foreach $invoices as $invoice}
+				<tr>
+					<td>{$invoice->id}</td>
+					<td>{$invoice->title}</td>
+					<td>{$invoice->company}</td>
+					<td>{$invoice->contact}</td>
+					<td>{$invoice->created|date:'%d.%m.%Y'}</td>
+					<td>{$invoice->delivered|date:'%d.%m.%Y'}</td>
+					<td>{$invoice->due|date:'%d.%m.%Y'}</td>
+					<td>{$invoice->total_value}€</td>
+					<td>
+						<?php 
+							if ($invoice->due > date("Y-m-d H:i:s")) {
+								$datetime1 = date_create(date("Y-m-d H:i:s"));
+								$datetime2 = date_create($invoice->due);
+								$interval = date_diff($datetime1, $datetime2);
+								echo $interval->format('%R%a days');
+							} else {
+								echo 'Expired';							
+							}
+						?>
+					</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+	</body>
+</html>
